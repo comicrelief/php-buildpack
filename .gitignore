@@ -12,3 +12,5 @@ binaries/trusty/*
 vendor
 *.DS_Store
 .bundle
+
+.idea
