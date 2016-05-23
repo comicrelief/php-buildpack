@@ -1,87 +1,45 @@
-## Cloud Foundry PHP Buildpack
+## Comic Relief PHP Buildpack
 
-A buildpack to deploy PHP applications to Cloud Foundry based systems, such as a [cloud provider](https://www.cloudfoundry.org/learn/certified-providers/) or your own instance.
+Forked from [Cloud Foundry PHP Buildpack](https://github.com/cloudfoundry/php-buildpack). There are more usage notes etc. in [the main repo's readme](https://github.com/cloudfoundry/php-buildpack/blob/master/README.md).
 
-## Using the Buildpack
+### Why?
 
-For information on deploying PHP applications visit [CloudFoundry.org](http://docs.cloudfoundry.org/buildpacks/php/index.html).
+We've forked the CF buildpack in order to support additional PHP extensions. Neither the CF nor Heroku options support everything we need as of May 2016.
 
-# Building the Buildpack
+### Is an extension already supported?
 
-1. Make sure you have fetched submodules
+* See [`manifest.yml`](manifest.yml)
+* Find your PHP version
+* Check the `modules` key from your required extension
 
-  ```bash
-  git submodule update --init
-  ```
+### Steps to support an extension
 
-1. Get latest buildpack dependencies
+* In this buildpack:
+    * Open `lib/compile_helpers.py` and append your extension name to the supported list in `validate_php_extensions()`
+    * Commit and push to master before your next build
+* In your app:
+    * add the extension's name to `.bp-config/options.json` in `PHP_EXTENSIONS`
+    * add the `.so` file in `.php-extensions`
+    * if it's the first custom extension:
+        * add a folder in `.extension` with the name of the extension
+        * inside it, add a file called `extension.py` with contents [like these](https://github.com/comicrelief/frost-service-layer/blob/feat/FR-0000-docker-config/.extensions/solr/extension.py) - N.B. if you take this approach and load all PHP extensions, you only need one CF extension for your app
 
-  ```shell
-  BUNDLE_GEMFILE=cf.Gemfile bundle
-  ```
+#### Getting a compiled extension to use
 
-1. Build the buildpack
+Need a `.so` file to use?
 
-  ```shell
-  BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-packager [ --uncached | --cached ]
-  ```
+* Get a working local Docker image using a similar environment to the Cloud Foundry one, e.g. Ubuntu 14.04 LTS, with a Dockerfile like [this one](https://github.com/comicrelief/frost-docker/blob/master/Dockerfile) which loads your extension
+* Run Docker with it
+* Work out the location of the loaded PHP extensions in your image, e.g. using `phpinfo()` to find the active extensions directory
+* Use `docker cp` to get the compiled `.so` file out to your local system
 
-1. Use in Cloud Foundry
+### Keeping this fork current
 
-    Upload the buildpack to your Cloud Foundry instance and optionally specify it by name
+* If you've not already, track the upstream from your local: `git remote add upstream https://github.com/cloudfoundry/php-buildpack.git`
+* `git fetch upstream`
+* while on your local `master` branch, `git merge upstream/master`
 
-    ```bash
-    cf create-buildpack custom_php_buildpack php_buildpack-cached-custom.zip 1
-    cf push my_app -b custom_php_buildpack
-    ```
+### Things to avoid
 
-## Testing
-Buildpacks use the [Machete](https://github.com/cloudfoundry/machete) framework for running integration tests.
-
-To test a buildpack, run the following command from the buildpack's directory:
-
-```
-BUNDLE_GEMFILE=cf.Gemfile bundle exec buildpack-build
-```
-
-More options can be found on Machete's [Github page.](https://github.com/cloudfoundry/machete)
-
-## Contributing
-
-Find our guidelines [here](./CONTRIBUTING.md).
-
-## Help and Support
-
-Join the #buildpacks channel in our [Slack community] (http://slack.cloudfoundry.org/) 
-
-### Reporting Issues
-
-This project is managed through GitHub.  If you encounter any issues, bug or problems with the buildpack please open an issue.
-
-## Active Development
-
-The project backlog is on [Pivotal Tracker](https://www.pivotaltracker.com/projects/1042066)
-
-[Configuration Options]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/config.md
-[Development]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/development.md
-[Troubleshooting]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/troubleshooting.md
-[Usage]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/usage.md
-[Binaries]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/binaries.md
-[php-info]:https://github.com/dmikusa-pivotal/cf-ex-php-info
-[PHPMyAdmin]:https://github.com/dmikusa-pivotal/cf-ex-phpmyadmin
-[PHPPgAdmin]:https://github.com/dmikusa-pivotal/cf-ex-phppgadmin
-[Wordpress]:https://github.com/dmikusa-pivotal/cf-ex-worpress
-[Drupal]:https://github.com/dmikusa-pivotal/cf-ex-drupal
-[CodeIgniter]:https://github.com/dmikusa-pivotal/cf-ex-code-igniter
-[Stand Alone]:https://github.com/dmikusa-pivotal/cf-ex-stand-alone
-[pgbouncer]:https://github.com/dmikusa-pivotal/cf-ex-pgbouncer
-[Apache License]:http://www.apache.org/licenses/LICENSE-2.0
-[vcap-dev]:https://groups.google.com/a/cloudfoundry.org/forum/#!forum/vcap-dev
-[support forums]:http://support.run.pivotal.io/home
-[Composer support]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/composer.md
-["offline" mode]:https://github.com/cloudfoundry/php-buildpack/blob/master/docs/binaries.md#bundling-binaries-with-the-build-pack
-[phalcon]:https://github.com/dmikusa-pivotal/cf-ex-phalcon
-[Phalcon]:http://phalconphp.com/en/
-[composer]:https://github.com/dmikusa-pivotal/cf-ex-composer
-[Proxy Support]:http://docs.cloudfoundry.org/buildpacks/proxy-usage.html
-
+* Don't put your extension as an `ext-*` dependency in `composer.json`. This will break the buildpack compile, because the composer CF extension is compiled before the custom extensions are, and Composer will attempt to enforce the requirement while it's not yet met.
+* Don't list extensions in an app-specific `php.ini` - this is used by some other CF flavours but appears to do nothing in our use case.
