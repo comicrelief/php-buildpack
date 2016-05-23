@@ -100,7 +100,6 @@ def _get_supported_php_extensions(ctx):
     for root, dirs, files in os.walk(php_extension_directory):
         for f in files:
             if '.so' in f:
-                print("Supporting extension %s" % f)
                 php_extensions.append(f.replace('.so', ''))
     return php_extensions
 
