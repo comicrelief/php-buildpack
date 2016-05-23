@@ -20,7 +20,7 @@ We've forked the CF buildpack in order to support additional PHP extensions. Nei
 * In your app:
     * add the extension's name to `.bp-config/options.json` in `PHP_EXTENSIONS`
     * add the `.so` file in `.php-extensions`
-    * if there are additional dependent libs, e.g. `/usr/lib/x86_64-linux-gnu/libgearman.so`, put them in `.php-extension-support`
+    * if there are additional library dependencies, e.g. `/usr/lib/x86_64-linux-gnu/libgearman.so`, put them in `.php-extension-support`
     * if it's the first custom extension:
         * add a folder in `.extension` with the name of the extension
         * inside it, add a file called `extension.py` with contents [like these](https://github.com/comicrelief/frost-service-layer/blob/feat/FR-0000-docker-config/.extensions/solr/extension.py) - N.B. if you take this approach and load all PHP extensions, you only need one CF extension for your app
