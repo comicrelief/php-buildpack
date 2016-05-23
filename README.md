@@ -10,7 +10,7 @@ We've forked the CF buildpack in order to support additional PHP extensions. Nei
 
 * See [`manifest.yml`](manifest.yml)
 * Find your PHP version
-* Check the `modules` key from your required extension
+* Check the `modules` key for your required extension
 
 ### Steps to support an extension
 
