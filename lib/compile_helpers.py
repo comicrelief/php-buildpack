@@ -109,6 +109,7 @@ def validate_php_extensions(ctx):
     filtered_extensions = []
     requested_extensions = ctx['PHP_EXTENSIONS']
     supported_extensions = _get_supported_php_extensions(ctx)
+    supported_extensions.append('solr')
 
     for extension in requested_extensions:
         if extension not in supported_extensions:
