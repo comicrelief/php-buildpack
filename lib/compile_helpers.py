@@ -110,6 +110,7 @@ def validate_php_extensions(ctx):
     supported_extensions = _get_supported_php_extensions(ctx)
     supported_extensions.append('solr')
     supported_extensions.append('apcu')
+    supported_extensions.append('gearman')
 
     for extension in requested_extensions:
         if extension not in supported_extensions:
