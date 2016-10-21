@@ -22,7 +22,7 @@ default_versions:
 - name: composer
   version: 1.2.1
 - name: nginx
-  version: 1.11.4
+  version: 1.11.5
 url_to_dependency_map:
 - match: newrelic-php5-(\d+\.\d+\.\d+\.\d+)-linux
   name: newrelic
@@ -179,9 +179,9 @@ dependencies:
   - zip
   - zlib
 - name: php
-  version: 5.6.24
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php/php-5.6.24-linux-x64-1474041656.tgz
-  md5: d933038230b49e9b6ce9d056ff5dfb8e
+  version: 5.6.26
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php/php-5.6.26-linux-x64-1476201830.tgz
+  md5: f2185734be611248970d22c9d827680a
   cf_stacks:
   - cflinuxfs2
   modules:
@@ -245,9 +245,9 @@ dependencies:
   - zip
   - zlib
 - name: php
-  version: 5.6.25
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php/php-5.6.25-linux-x64-1474042643.tgz
-  md5: 8c5d46ec1f6819a34f6e73151e7a2b07
+  version: 5.6.27
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php/php-5.6.27-linux-x64-1476722975.tgz
+  md5: 7e6c707147afe8c34625eded828085a8
   cf_stacks:
   - cflinuxfs2
   modules:
@@ -311,11 +311,11 @@ dependencies:
   - zip
   - zlib
 - name: php
-  version: 7.0.9
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php7/php7-7.0.9-linux-x64-1474039427.tgz
+  version: 7.0.11
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php7/php7-7.0.11-linux-x64-1476373121.tgz
   cf_stacks:
   - cflinuxfs2
-  md5: 4d4b1c5b82606c1b1954fc52b866e143
+  md5: 3f75518f708ef883b84f7ecec91ce38b
   modules:
   - amqp
   - bz2
@@ -348,6 +348,7 @@ dependencies:
   - pgsql
   - phalcon
   - pspell
+  - rdkafka
   - snmp
   - soap
   - sockets
@@ -358,9 +359,9 @@ dependencies:
   - zip
   - zlib
 - name: php
-  version: 7.0.10
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php7/php7-7.0.10-linux-x64-1474040158.tgz
-  md5: cf68ba4929fe975c9fd064440d38296d
+  version: 7.0.12
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/php7/php7-7.0.12-linux-x64-1476722714.tgz
+  md5: b5e157e2c471350b807f5d761c157bad
   cf_stacks:
   - cflinuxfs2
   modules:
@@ -395,6 +396,7 @@ dependencies:
   - pgsql
   - phalcon
   - pspell
+  - rdkafka
   - snmp
   - soap
   - sockets
@@ -404,12 +406,6 @@ dependencies:
   - yaf
   - zip
   - zlib
-- name: nginx
-  version: 1.10.1
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/nginx/nginx-1.10.1-linux-x64.tgz
-  cf_stacks:
-  - cflinuxfs2
-  md5: 8b2b4d5572940d96bbb68cc10027b679
 - name: composer
   version: 1.2.1
   uri: https://buildpacks.cloudfoundry.org/php/binaries/trusty/composer/1.2.1/composer.phar
@@ -417,8 +413,14 @@ dependencies:
   cf_stacks:
   - cflinuxfs2
 - name: nginx
-  version: 1.11.4
-  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/nginx/nginx-1.11.4-linux-x64.tgz
-  md5: 5a62aad3f1d7baf8e47c8a61d710848e
+  version: 1.11.5
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/nginx/nginx-1.11.5-linux-x64.tgz
+  md5: 48811c404ce20f7dbe1b731e780c62a8
+  cf_stacks:
+  - cflinuxfs2
+- name: nginx
+  version: 1.10.2
+  uri: https://buildpacks.cloudfoundry.org/concourse-binaries/nginx/nginx-1.10.2-linux-x64.tgz
+  md5: a9e0c628bfde1953372ae18c55e9ed0f
   cf_stacks:
   - cflinuxfs2
