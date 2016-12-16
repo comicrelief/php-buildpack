@@ -112,6 +112,7 @@ def validate_php_extensions(ctx):
     filtered_extensions = []
     requested_extensions = ctx['PHP_EXTENSIONS']
     supported_extensions = _get_supported_php_extensions(ctx)
+    supported_extensions.append('amqp-beta')
     supported_extensions.append('gearman')
     supported_extensions.append('memcached')
 
