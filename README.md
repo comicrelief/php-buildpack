@@ -23,7 +23,7 @@ We've forked the CF buildpack in order to support additional PHP extensions. Nei
     * if there are additional library dependencies, e.g. `/usr/lib/x86_64-linux-gnu/libgearman.so`, put them in `.php-extension-support`
     * if it's the first custom extension:
         * add a folder in `.extensions` with the name of the extension
-        * inside it, add a file called `extension.py` with contents [like these](https://github.com/comicrelief/frost-service-layer/blob/feat/FR-0000-docker-config/.extensions/solr/extension.py) - N.B. if you take this approach and load all PHP extensions, you only need one CF extension for your app
+        * inside it, add a file called `extension.py` with contents [like these](https://github.com/comicrelief/frost-service-layer/blob/a16f40dd7ccbea25c583d58068f1b034bdac06ad/.extensions/amqp-beta/extension.py) - N.B. if you take this approach and load all PHP extensions, you only need one CF extension for your app
 
 ### Getting a compiled extension to use
 
